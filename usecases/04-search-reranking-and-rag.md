@@ -138,6 +138,14 @@ The percentage distribution is what makes this useful - you can see when the sys
 
 **A practical tip from that project:** pass the file tree and let Jev score paths, rather than embedding every source file. The path names carry a surprising amount of semantic signal and cost far fewer tokens.
 
+### Semantic codebase retrieval
+
+[dzhng/jevgrep](https://github.com/dzhng/jevgrep) walks a repository hierarchy, then uses Jev to select relevant folders, files, declarations, and source excerpts for a coding agent. It returns verbatim evidence instead of generating an answer.
+
+The author's self-reported [total-cost evaluation](https://github.com/dzhng/jevgrep/blob/main/evals/results/total-cost-2026-09-28.md) kept the same **8/10** official SWE-bench solves as a saved no-Jev baseline while reducing combined task cost from **$7.62 to $5.66**, including estimated Jev charges and failed attempts. Treat the **25.8%** reduction as a launch-week, single-run result: ten tuned Python tasks, a reused baseline, different trajectories, no variance estimate, and no independent reproduction. A later [0.5.0 experiment](https://github.com/dzhng/jevgrep/blob/main/evals/results/combined-cost-research-2026-09-28.md) reduced retrieval cost without reducing combined task cost.
+
+**The useful design lesson:** evaluate retrieval against the full downstream task. Fewer Jev calls or a shorter context packet can still make the coding agent explore more, revise more, or spend more overall.
+
 ### Natural-language SQL predicates
 
 [realZachi/pg-jev](https://github.com/realZachi/pg-jev) is a PostgreSQL extension that lets you filter, rank, and classify rows with plain English, with no index and no vector column:
