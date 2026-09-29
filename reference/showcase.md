@@ -21,7 +21,7 @@ This is the "show me what people built" list. It is deliberately not a link dump
 | [Agent supervision](#agent-supervision-and-guardrails) | pi-warden, jev-shield, jev-skill-gate, pi-jev | fast-jev-compaction, winnow, Canny, yoshi, jev-guard, omp, toolgate, agent-handoff-gate |
 | [Security](#security-and-adversarial-robustness) | jev-sec-bench, typesafe-ai-firewall, kiarina safety lab | Jev-Moderation-Bot, Jeeves |
 | [Code and developer tools](#code-and-developer-tools) | jev-review (Niaz), commit-miner, JevLint | jev-review (deva), blink, DiffJury, migration-guard |
-| [Search and retrieval](#search-and-retrieval) | jev-rerank-bench, pg-jev, JevSQL | jev-search, jev-reranking, jevlogs, jev-tree |
+| [Search and retrieval](#search-and-retrieval) | jevgrep, jev-rerank-bench, pg-jev, JevSQL | jev-search, jev-reranking, jevlogs, jev-tree |
 | [Classification and evaluation](#classification-and-evaluation) | calibre, padflow, synergy-screening, agent-failure-bench, jev-benchmarks, tiab-review-plugin, Jev-sample | kyotsu-ai-bench, document-classification, CV screening, nola triage |
 | [Computer use](#computer-use-and-browser-agents) | jev-ultrafast, typesafe-computer-use, cua suggest_action (open PR) | otto, almond-fastloop, jev-browser (x5), AskJev, voice-browser, open-typesafe-camoufox |
 | [Trading and markets](#trading-and-markets) | jev-trader | Jev-Trades, trade-jev, jevbot, jev_stock, axiom-runtime |
@@ -267,6 +267,16 @@ commit-miner scan . --cwe 79,89
 ---
 
 ## Search and retrieval
+
+### [dzhng/jevgrep](https://github.com/dzhng/jevgrep) - semantic code search for coding agents **[measured]**
+
+**What it does.** A CLI takes a question about an unfamiliar repository and uses Jev to select promising folders, files, declarations, and surrounding source excerpts. It returns paths and verbatim evidence to the coding agent rather than generating an answer. Exact symbols and paths still belong to direct reads or `rg`; this is for behavioral questions that span unfamiliar files.
+
+**The measured result.** In the author's self-reported [total-cost evaluation](https://github.com/dzhng/jevgrep/blob/main/evals/results/total-cost-2026-09-28.md), Jevgrep and the saved no-Jev baseline each solved **8 of 10** tuned Python SWE-bench tasks. One fresh Jevgrep attempt per task cost **$5.66 total**, including estimated Jev charges and failed attempts, versus **$7.62** for the reused baseline - **25.8% lower total cost**.
+
+**Read the limits before the headline.** This is a launch-week artifact and a single run on ten repeatedly studied tasks, not a holdout or variance estimate. The baseline was reused, trajectories differed, Jev cost used public list-price estimates rather than invoices, and the result has not been independently reproduced. A later [0.5.0 experiment](https://github.com/dzhng/jevgrep/blob/main/evals/results/combined-cost-research-2026-09-28.md) kept 8/10 solves and reduced Jev cost, but did **not** improve combined cost.
+
+**The pattern to lift.** Hierarchical semantic filtering can lower the expensive agent's exploration cost, but retrieval must be evaluated as part of the complete coding task. Cheaper retrieval alone does not prove a cheaper or faster agent.
 
 ### [anessbelbati/jev-rerank-bench](https://github.com/anessbelbati/jev-rerank-bench) - is Jev a good reranker? **[measured]**
 
